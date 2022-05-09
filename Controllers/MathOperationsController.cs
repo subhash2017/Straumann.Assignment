@@ -23,9 +23,6 @@ namespace Straumann.Assignment.Controllers
         [HttpGet("add")]
         public int Add([FromHeader] int num1, [FromHeader] int num2)
         {
-
-            _context.Database.EnsureCreated();
-
                 var entity = new MathOperationsEntity()
                 {
                     OperationType = MathOperationsType.Add.ToString(),

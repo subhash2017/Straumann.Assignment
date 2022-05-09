@@ -32,7 +32,7 @@ namespace Straumann.Assignment
 
             services.AddDbContext<MathContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"), ServiceLifetime.Transient);
-           
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Straumann.Assignment", Version = "v1" });
@@ -48,6 +48,13 @@ namespace Straumann.Assignment
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Straumann.Assignment v1"));
             }
+
+            var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            using (var serviceScope = serviceScopeFactory.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetService<MathContext>();
+                dbContext.Database.EnsureCreated();
+            };
 
             app.UseHttpsRedirection();
 
