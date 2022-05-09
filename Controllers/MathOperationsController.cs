@@ -113,8 +113,8 @@ namespace Straumann.Assignment.Controllers
         /// API to retrieve last 10 operation history.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("getOpration")]
-        public List<MathOperationsEntity> Opration()
+        [HttpGet("getOperation")]
+        public List<MathOperationsEntity> Operation()
         {
                 var result = _context.MathOperationsEntities.OrderByDescending(x=>x.CreatedOn).Take(10).ToList();
                 return result;
